@@ -20,10 +20,11 @@ import Monitoring1 from "./Monitoring1";
 import Monitoring2 from "./Monitoring2";
 import Monitoring3 from "./Monitoring3";
 import Monitoring4 from "./Monitoring4";
-import TodayNews from "./TodayNews";
-import SliderJSS from "./slider";
-import Slider from "react-slick";
+// import TodayNews from "./TodayNews";
+// import SliderJSS from "./slider";
+// import Slider from "react-slick";
 import Moni from "./MonitorComponent";
+import { SearchBox } from "./SearchBox";
 
 const Search = Input.Search;
 class SamplePage extends Component {
@@ -57,7 +58,8 @@ class SamplePage extends Component {
       .orderBy("date", "desc");
     this.unsubscribe = null;
     this.state = {
-      Evdrel: []
+      Evdrel: [],
+      searchField: ""
     };
   }
 
@@ -96,6 +98,9 @@ class SamplePage extends Component {
     });
   };
 
+  onSearchChanged = event => {
+    this.setState({ searchField: event.target.value });
+  };
   componentDidMount() {
     this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
     // const script = document.createElement("script");
@@ -106,6 +111,11 @@ class SamplePage extends Component {
   }
 
   render() {
+    const { Evdrel, searchField } = this.state;
+    const filteredEvdrel = Evdrel.filter(el =>
+      el.text.toLowerCase().includes(searchField)
+    );
+    console.log(Evdrel);
     return (
       <div className="gx-main-content-wrapper">
         <Divider orientation="left">
@@ -152,7 +162,8 @@ class SamplePage extends Component {
         <div className="gx-main-content gx-pb-sm-4">
           <div className="ant-row">
             <div className="ant-col ant-col-24">
-              {this.state.Evdrel.map(board => (
+              <SearchBox onSearch={this.onSearchChanged} />
+              {filteredEvdrel.map(board => (
                 <div key={board.key} className="gx-user-list gx-card-list">
                   <Skeleton avatar loading={this.state.loading} active>
                     <div className="gx-featured-thumb">

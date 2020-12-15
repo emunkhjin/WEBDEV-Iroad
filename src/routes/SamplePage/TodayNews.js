@@ -33,8 +33,11 @@ export default class TodayNews extends Component {
   };
   constructor(props) {
     super(props);
-
-    this.ref = firebase.firestore().collection("Evdrel");
+    this.ref = firebase
+      .firestore()
+      .collection("Evdrel")
+      .orderBy("date", "desc")
+      .where("cat", "==", "Чингэлтэй дүүрэг");
     this.unsubscribe = null;
     this.state = {
       Evdrel: []
