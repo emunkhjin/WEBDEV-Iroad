@@ -79,7 +79,7 @@ export default class Monitoring1 extends Component {
 
   render() {
     return (
-      <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
+      <Col span={12} className="gx-col-full">
         {" "}
         <Skeleton avatar loading={this.state.loading} active>
           <IconWithTextCard

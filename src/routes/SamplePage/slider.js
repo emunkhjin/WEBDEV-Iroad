@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   Tooltip
 } from "recharts";
+import Moni from "./MonitorComponent";
 
 // import IconWithTextCard from "components/Metrics/IconWithTextCard";
 // import ChartCard from "components/Metrics/ChartCard";
@@ -92,26 +93,16 @@ export default class SliderJSS extends Component {
   render() {
     return (
       <div className="ant-col ant-col-24">
-        <Col span={12}>
+        <Col>
           <Carousel autoplay effect="fade">
-            {this.state.Evdrel.map(board => (
-              <div className="ant-card ant-card-bordered ant-card-type-inner ">
-                <div className="ant-card-head">
-                  <div className="ant-card-head-wrapper">
-                    <div className="ant-card-head-title">
-                      {board.text},{board.cat},
-                      {new Date(board.date.seconds * 1000).toLocaleDateString(
-                        "en-US"
-                      )}{" "}
-                      -{" "}
-                      {new Date(board.date.seconds * 1000).toLocaleTimeString(
-                        "en-US"
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}{" "}
+            <Moni duureg="Баянзүрх дүүрэг" iconColor="yellow" />
+            <Moni duureg="Сүхбаатар дүүрэг" iconColor="blue" />
+            <Moni duureg="Чингэлтэй дүүрэг" iconColor="red" />
+            <Moni duureg="Баянгол дүүрэг" iconColor="green" />
+            <Moni duureg="Хан-Уул дүүрэг" iconColor="yellow" />
+            <Moni duureg="Багахангай дүүрэг" iconColor="blue" />
+            <Moni duureg="Налайх дүүрэг" iconColor="red" />
+            <Moni duureg="Багануур дүүрэг" iconColor="green" />
           </Carousel>
         </Col>
       </div>

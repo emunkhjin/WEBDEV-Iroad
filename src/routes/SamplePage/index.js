@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import * as firebase from "firebase";
 import "firebase/firestore";
+import CardBox from "components/CardBox/index";
 import {
   Tag,
   Card,
@@ -11,14 +12,18 @@ import {
   Button,
   Carousel,
   Input,
-  Badge
+  Badge,
+  Divider
 } from "antd";
 import { TEXT } from "react-dnd-html5-backend/lib/NativeTypes";
 import Monitoring1 from "./Monitoring1";
 import Monitoring2 from "./Monitoring2";
 import Monitoring3 from "./Monitoring3";
 import Monitoring4 from "./Monitoring4";
+import TodayNews from "./TodayNews";
 import SliderJSS from "./slider";
+import Slider from "react-slick";
+import Moni from "./MonitorComponent";
 
 const Search = Input.Search;
 class SamplePage extends Component {
@@ -103,13 +108,35 @@ class SamplePage extends Component {
   render() {
     return (
       <div className="gx-main-content-wrapper">
-        <Row wrap>
+        <Divider orientation="left">
+          <h2 className="gx-mb-2">Monitoring</h2>
+        </Divider>
+        <Row gutter={[8, 8]}>
           <Monitoring1 />
           <Monitoring2 />
+        </Row>
+        <Row gutter={[8, 8]}>
           <Monitoring3 />
           <Monitoring4 />
         </Row>
 
+        <Row wrap>
+          <Divider orientation="left">
+            <h2 className="gx-mb-2">Дүүрэг</h2>
+          </Divider>
+
+          <Moni duureg="Баянзүрх дүүрэг" iconColor="yellow" />
+          <Moni duureg="Сүхбаатар дүүрэг" iconColor="blue" />
+          <Moni duureg="Чингэлтэй дүүрэг" iconColor="red" />
+          <Moni duureg="Баянгол дүүрэг" iconColor="green" />
+          <Moni duureg="Хан-Уул дүүрэг" iconColor="yellow" />
+          <Moni duureg="Багахангай дүүрэг" iconColor="blue" />
+          <Moni duureg="Налайх дүүрэг" iconColor="red" />
+          <Moni duureg="Багануур дүүрэг" iconColor="green" />
+        </Row>
+        <Divider orientation="left">
+          <h2 className="gx-mb-2">Шинээр нэмэгдсэн мэдээлэл</h2>
+        </Divider>
         {/* <SliderJSS /> */}
         {/* <div>
           <Card className="gx-card" title="Search Box">
@@ -126,7 +153,7 @@ class SamplePage extends Component {
           <div className="ant-row">
             <div className="ant-col ant-col-24">
               {this.state.Evdrel.map(board => (
-                <div className="gx-user-list gx-card-list">
+                <div key={board.key} className="gx-user-list gx-card-list">
                   <Skeleton avatar loading={this.state.loading} active>
                     <div className="gx-featured-thumb">
                       <img

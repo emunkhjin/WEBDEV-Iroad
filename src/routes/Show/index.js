@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import { Link } from "react-router-dom";
-import { Tag, Card, Col, Row, Skeleton, Divider, Button } from "antd";
+import { Tag, Card, Col, Row, Skeleton, Divider, Button, Badge } from "antd";
 import { shape } from "prop-types";
-
+import moment from "moment";
 class Show extends Component {
   state = {
     loading: false
@@ -96,6 +96,23 @@ class Show extends Component {
                             <Tag className="gx-rounded-xs" color="#06BB8A">
                               {this.state.board.cat}
                             </Tag>
+                            {this.state.board.complete ? (
+                              <Tag className="gx-rounded-xs" color="green">
+                                <Badge
+                                  size="default"
+                                  status="success"
+                                  text="Шийдэгдсэн"
+                                />
+                              </Tag>
+                            ) : (
+                              <Tag className="gx-rounded-xs" color="cyan">
+                                <Badge
+                                  size="default"
+                                  status="processing"
+                                  text="Шийдэгдээгүй"
+                                />
+                              </Tag>
+                            )}
                             <Divider />
                             <div className="ant-row-flex">
                               <p className="gx-mr-3 gx-mb-1">
@@ -133,6 +150,10 @@ class Show extends Component {
                                   className={`icon icon-user gx-fs-xs gx-mr-2 gx-d-inline-flex gx-vertical-align-middle`}
                                 />
                                 {this.state.board.email} 
+                                {/* {moment(
+                                  this.state.board.date,
+                                  "DD/MM/YYYY HH:mm:ss"
+                                )} */}
                               </p>
                               <button
                                 onClick={this.delete.bind(this, this.state.key)}
