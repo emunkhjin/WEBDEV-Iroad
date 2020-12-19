@@ -13,7 +13,8 @@ import {
   Carousel,
   Input,
   Badge,
-  Divider
+  Divider,
+  Avatar
 } from "antd";
 import { TEXT } from "react-dnd-html5-backend/lib/NativeTypes";
 import Monitoring1 from "./Monitoring1";
@@ -23,9 +24,12 @@ import Monitoring4 from "./Monitoring4";
 // import TodayNews from "./TodayNews";
 // import SliderJSS from "./slider";
 // import Slider from "react-slick";
-import Moni from "./MonitorComponent";
+import { Moni } from "./MonitorComponent";
 import { SearchBox } from "./SearchBox";
-
+import TodayNews from "./TodayNews";
+import WelComeCard from "../../../src/components/dashboard/CRM/WelComeCard";
+import SiteVisit from "../../../src/components/dashboard/CRM/SiteVisit";
+import SiteAudience from "../../../src/components/dashboard/CRM/SiteAudience";
 const Search = Input.Search;
 class SamplePage extends Component {
   state = {
@@ -115,9 +119,19 @@ class SamplePage extends Component {
     const filteredEvdrel = Evdrel.filter(el =>
       el.text.toLowerCase().includes(searchField)
     );
-    console.log(Evdrel);
+
+    // var user = firebase.auth().currentUser.displayName;
+    // var userPhoto = firebase.auth().currentUser.photoURL;
+    //const userName = user;
+    //console.log(userName);
     return (
       <div className="gx-main-content-wrapper">
+        {/* <Divider orientation="left">
+          <h2 className="gx-mb-2">
+            Сайн байна уу {userName}
+            <Avatar src={userPhoto} />
+          </h2>
+        </Divider> */}
         <Divider orientation="left">
           <h2 className="gx-mb-2">Monitoring</h2>
         </Divider>
@@ -129,12 +143,47 @@ class SamplePage extends Component {
           <Monitoring3 />
           <Monitoring4 />
         </Row>
+        <Row>
+          {/* <Col span={24}>
+            <div className="gx-card">
+              <div className="gx-card-body">
+                <Row>
+                  <Col xl={6} lg={12} md={12} sm={12} xs={24}>
+                    <WelComeCard />
+                  </Col>
 
-        <Row wrap>
-          <Divider orientation="left">
-            <h2 className="gx-mb-2">Дүүрэг</h2>
-          </Divider>
+                  <Col
+                    xl={6}
+                    lg={12}
+                    md={12}
+                    sm={12}
+                    xs={24}
+                    className="gx-audi-col"
+                  >
+                    <SiteAudience />
+                  </Col>
 
+                  <Col
+                    xl={12}
+                    lg={24}
+                    md={24}
+                    sm={24}
+                    xs={24}
+                    className="gx-visit-col"
+                  >
+                    <SiteVisit />
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </Col> */}
+        </Row>
+        <Divider orientation="left">
+          <h2 className="gx-mb-2">Дүүрэг</h2>
+        </Divider>
+        <TodayNews />
+
+        <Row>
           <Moni duureg="Баянзүрх дүүрэг" iconColor="yellow" />
           <Moni duureg="Сүхбаатар дүүрэг" iconColor="blue" />
           <Moni duureg="Чингэлтэй дүүрэг" iconColor="red" />
@@ -164,43 +213,55 @@ class SamplePage extends Component {
             <div className="ant-col ant-col-24">
               <SearchBox onSearch={this.onSearchChanged} />
               {filteredEvdrel.map(board => (
-                <div key={board.key} className="gx-user-list gx-card-list">
+                <div key={board.key} className="dt-card">
                   <Skeleton avatar loading={this.state.loading} active>
-                    <div className="gx-featured-thumb">
-                      <img
-                        className="gx-rounded-lg gx-width-175"
-                        src={board.photo}
-                        alt="..."
-                      />
-                    </div>
-
-                    <div className="gx-media-body gx-featured-content">
-                      <div className="gx-featured-content-left">
-                        <Tag className="gx-rounded-xs" color="#06BB8A">
-                          {board.cat}
-                        </Tag>
-                        <div className="gx-featured-content-left">
-                          {board.complete ? (
-                            <Tag className="gx-rounded-xs" color="green">
-                              <Badge
-                                size="default"
-                                status="success"
-                                text="Шийдэгдсэн"
-                              />
-                            </Tag>
-                          ) : (
-                            <Tag className="gx-rounded-xs" color="cyan">
-                              <Badge
-                                size="default"
-                                status="processing"
-                                text="Шийдэгдээгүй"
-                              />
-                            </Tag>
-                          )}
+                    {/* Card */}
+                    <div className="card dt-card__product-horizontal">
+                      <div className="dt-product-image">
+                        <div className="dt-grid-thumb-equal">
+                          <span className="dt-grid-thumb-cover">
+                            <img
+                              className="card-img-left"
+                              src={board.photo}
+                              alt={board.key}
+                            />
+                          </span>
                         </div>
+                      </div>
+                      {/* Card Body */}
+                      <div className="card-body overflow-hidden mb-6 mb-sm-0 pr-sm-3">
+                        <div className="text-truncate">
+                          <h2 className="d-inline-block mb-3 pr-4 mr-3 border-right">
+                            {board.text}
+                          </h2>
 
-                        <h3 className="gx-mb-2">{board.text}</h3>
-                        <div className="ant-row-flex">
+                          <h5 className="d-inline-block mb-3 border-right">
+                            {board.complete ? (
+                              <Tag className="gx-rounded-xs" color="green">
+                                <Badge
+                                  size="default"
+                                  status="success"
+                                  text="Шийдэгдсэн"
+                                />
+                              </Tag>
+                            ) : (
+                              <Tag className="gx-rounded-xs" color="purple">
+                                <Badge
+                                  size="default"
+                                  status="processing"
+                                  text="Шийдэгдээгүй"
+                                />
+                              </Tag>
+                            )}
+                          </h5>
+                          <p className="d-inline-block mb-3">
+                             {" "}
+                            <span class="badge badge-info mb-1 mr-1">
+                              {board.cat}{" "}
+                            </span>
+                          </p>
+                        </div>
+                        <p className="text-truncate text-light-gray">
                           <p className="gx-mr-3 gx-mb-1">
                             <span className="gx-text-grey">Longtitude:</span>{" "}
                             {board.longtitude}
@@ -209,46 +270,47 @@ class SamplePage extends Component {
                             <span className="gx-text-grey">Latitude:</span>{" "}
                             {board.latitude}
                           </p>
-                        </div>
-                        <div className="ant-row-flex">
-                          <p className="gx-text-grey gx-mb-1">
-                            <i
-                              className={`icon icon-user gx-fs-xs gx-mr-2 gx-d-inline-flex gx-vertical-align-middle`}
-                            />
-                            {board.email} 
-                          </p>
-                          <p className="gx-text-grey gx-ml-4 gx-mb-1">
-                            <i
-                              className={`icon icon-datepicker gx-fs-xs gx-mr-2 gx-d-inline-flex gx-vertical-align-middle`}
-                            />
-                            {new Date(
-                              board.date.seconds * 1000
-                            ).toLocaleDateString("en-US")}
-                          </p>
+                        </p>
+                        <div className="d-flex flex-sm-row flex-column">
+                          <div className="mb-4 mb-sm-0">
+                            <span className="mr-4 mr-md-6 text-nowrap">
+                              <i
+                                className={`icon icon-user gx-fs-xs gx-mr-2 gx-d-inline-flex gx-vertical-align-middle`}
+                              />
+                              {board.email} 
+                            </span>
+                            <span className="mr-4 mr-md-6 text-nowrap">
+                              <i
+                                className={`icon icon-datepicker gx-fs-xs gx-mr-2 gx-d-inline-flex gx-vertical-align-middle`}
+                              />
+                              {new Date(
+                                board.date.seconds * 1000
+                              ).toLocaleDateString("en-US")}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                      <div className="gx-featured-content-right">
-                        <div>
+                      {/* /card body */}
+                      <div className="card-footer">
+                        <div className="min-w-120">
+                          <a
+                            href={`/show/${board.key}`}
+                            className="btn btn-primary btn-block"
+                          >
+                            Дэлгэрэнгүй
+                          </a>
                           <a
                             href={`https://www.google.com/maps/place/${
                               board.latitude
                             },${board.longtitude}`}
-                            className="gx-text-grey gx-fs-sm"
+                            className="btn btn-outline-light text-light-gray btn-block"
                           >
-                            Байршлийг GoogleMaps дээр харах
+                            <span>Байршлийг GoogleMaps дээр харах</span>
                           </a>
                         </div>
-                        <a
-                          href={`/show/${board.key}`}
-                          className="gx-text-primary gx-text-truncate gx-mt-auto gx-mb-0 gx-pointer"
-                        >
-                          Дэлгэрэнгүй
-                          <i
-                            className={`icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle`}
-                          />
-                        </a>
                       </div>
                     </div>
+                    {/* /card */}
                   </Skeleton>
                 </div>
               ))}

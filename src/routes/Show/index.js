@@ -2,7 +2,17 @@ import React, { Component } from "react";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import { Link } from "react-router-dom";
-import { Tag, Card, Col, Row, Skeleton, Divider, Button, Badge } from "antd";
+import {
+  Tag,
+  Card,
+  Col,
+  Row,
+  Skeleton,
+  Divider,
+  Button,
+  Badge,
+  Comment
+} from "antd";
 import { shape } from "prop-types";
 import moment from "moment";
 class Show extends Component {
@@ -160,66 +170,43 @@ class Show extends Component {
                                     className={`icon icon-user gx-fs-xs gx-mr-2 gx-d-inline-flex gx-vertical-align-middle`}
                                   />
                                   {this.state.board.email} 
-                                  {/* {moment(
-                                  this.state.board.date,
-                                  "DD/MM/YYYY HH:mm:ss"
-                                )} */}
                                 </p>
-                                <button
-                                  onClick={this.delete.bind(
-                                    this,
-                                    this.state.key
-                                  )}
-                                  class="ant-btn ant-btn-danger ant-btn-lg gx-featured-content-right"
-                                >
-                                  <span className={`icon icon-trash gx-mr-2`}>
-                                     Устгах
-                                  </span>
-                                </button>
-                                <button
-                                  onClick={console.log("asd")}
-                                  class="ant-btn ant-btn-lg gx-featured-content "
-                                  style={{
-                                    borderColor: "green",
-                                    color: "green"
-                                  }}
-                                >
-                                  <span
-                                    className={`icon icon-ckeditor gx-mr-2`}
+                                <Col>
+                                  <button
+                                    onClick={this.delete.bind(
+                                      this,
+                                      this.state.key
+                                    )}
+                                    class="ant-btn ant-btn-danger ant-btn-lg "
                                   >
-                                     Засах
-                                  </span>
-                                </button>
+                                    <span className={`icon icon-trash gx-mr-2`}>
+                                       Устгах
+                                    </span>
+                                  </button>
+                                  <Link
+                                    to={`/edit/${this.state.key}`}
+                                    class="ant-btn ant-btn-lg"
+                                    style={{
+                                      borderColor: "green",
+                                      color: "green"
+                                    }}
+                                  >
+                                    <span
+                                      className={`icon icon-ckeditor gx-mr-2`}
+                                    >
+                                       Засах
+                                    </span>
+                                  </Link>
+                                </Col>
+                                <Col>
+                                  <Comment
+                                    author={<a>{this.state.board.agentName}</a>}
+                                    content={<p> {this.state.board.tailbar}</p>}
+                                  />
+                                </Col>
                               </div>
                             </Col>
-
-                            <Divider />
-
-                            <Divider />
-
-                            <Divider />
                           </div>
-                          {/* <div className="gx-featured-content-right">
-                          <div>
-                            <a
-                              href={`https://www.google.com/maps/place/${
-                                this.state.board.latitude
-                              },${this.state.board.longtitude}`}
-                              className="gx-text-grey gx-fs-sm"
-                            >
-                              Байршлийг GoogleMaps дээр харах
-                            </a>
-                          </div>
-                          <a
-                            href={`/show/${this.state.board.key}`}
-                            className="gx-text-primary gx-text-truncate gx-mt-auto gx-mb-0 gx-pointer"
-                          >
-                            Дэлгэрэнгүй
-                            <i
-                              className={`icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle`}
-                            />
-                          </a>
-                        </div> */}
                         </div>
                       </Skeleton>
                     </div>

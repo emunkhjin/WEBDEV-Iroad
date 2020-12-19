@@ -14,6 +14,10 @@ const App = ({ match }) => (
         path={`${match.url}show/:id`}
         component={asyncComponent(() => import("./Show"))}
       />
+      <Route
+        path={`${match.url}edit/:id`}
+        component={asyncComponent(() => import("./Edit"))}
+      />
     </Switch>
   </div>
 );

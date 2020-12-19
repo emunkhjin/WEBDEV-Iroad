@@ -1,7 +1,16 @@
 import React, { Component } from "react";
 import * as firebase from "firebase";
 import "firebase/firestore";
-import { Col, Row, Skeleton, List, Avatar, Collapse, Divider } from "antd";
+import {
+  Col,
+  Row,
+  Skeleton,
+  List,
+  Avatar,
+  Collapse,
+  Divider,
+  Badge
+} from "antd";
 
 import {
   Area,
@@ -21,7 +30,7 @@ import TrafficRaiseCard from "components/Metrics/TrafficRaiseCard";
 import QueriesCard from "components/Metrics/QueriesCard";
 import Auxiliary from "util/Auxiliary";
 
-export default class Moni extends Component {
+export const Moni = class Moni extends React.Component {
   state = {
     loading: false
   };
@@ -116,5 +125,85 @@ export default class Moni extends Component {
       </Skeleton>
     );
   }
-}
+};
 //shine ghde balai
+
+export const Moni2 = class Moni2 extends React.Component {
+  state = {
+    loading: false
+  };
+
+  showSkeleton = () => {
+    this.setState({ loading: true });
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 1500);
+  };
+  constructor(props) {
+    super(props);
+    this.ref = firebase
+      .firestore()
+      .collection("Evdrel")
+      .where("cat", "==", props.duureg);
+    this.unsubscribe = null;
+    this.state = {
+      Evdrel: []
+    };
+  }
+
+  onCollectionUpdate = querySnapshot => {
+    const Evdrel = [];
+    querySnapshot.forEach(doc => {
+      const {
+        bairshil,
+        email,
+        photo,
+        text,
+        latitude,
+        longtitude,
+        date
+      } = doc.data();
+      Evdrel.push({
+        key: doc.id,
+        doc, // DocumentSnapshot
+        bairshil,
+        email,
+        photo,
+        text,
+        latitude,
+        longtitude,
+        date
+      });
+    });
+    this.setState({
+      Evdrel
+    });
+  };
+
+  componentDidMount() {
+    this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
+    this.showSkeleton();
+  }
+
+  render() {
+    const { Panel } = Collapse;
+    return (
+      <Skeleton avatar loading={this.state.loading} active>
+        <div className="gx-testimonial-bg gx-standard gx-slide-item gx-text-left">
+          <div className="gx-media">
+            <Avatar className="gx-mr-3 gx-mb-3" src={this.props.duuregZurag} />
+
+            <div className="gx-media-body">
+              <div className="gx-testimonial">
+                <h1 className="gx-post-designation gx-text-white">
+                  {this.props.duureg}т <br /> {this.state.Evdrel.length} мэдээ
+                  байна.
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Skeleton>
+    );
+  }
+};
